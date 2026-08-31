@@ -6,7 +6,7 @@ dist/
 wheels/
 *.egg-info
 .__pycache__/
-.game_state.jsonl
+game_state.jsonl
 
 # Virtual environments
 .venv
