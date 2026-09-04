@@ -18,6 +18,7 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     _ = pygame.init()
     clock = pygame.time.Clock()
+
     dt: float = 0.0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     updatable = pygame.sprite.Group()
@@ -26,7 +27,7 @@ def main():
     shots = pygame.sprite.Group()
     Asteroid.containers = (asteroids, updatable, drawable)
     Player.containers = (updatable, drawable)
-    AsteroidField.containers = (updatable)
+    AsteroidField.containers = updatable
     Shot.containers = (shots, drawable, updatable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, PLAYER_RADIUS)
     _ = AsteroidField()
@@ -36,7 +37,7 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        _ = pygame.Surface.fill(screen,"black")
+        _ = pygame.Surface.fill(screen, "black")
         dt = clock.tick(60) / 1000
         for draw in drawable:
             draw.draw(screen)  # pyright: ignore[reportUnknownMemberType]
@@ -48,9 +49,9 @@ def main():
                 sys.exit()
             for shot in shots:
                 if shot.collides_with(asteroid):
-                    log_event("asteroid_hit")
+                    log_event("asteroid_shot")
                     shot.kill()
-                    asteroid.kill()
+                    asteroid.split()
         pygame.display.flip()
 
 
